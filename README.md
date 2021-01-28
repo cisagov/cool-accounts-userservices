@@ -33,7 +33,7 @@ To do this bootstrapping, follow these steps:
    credentials (access key ID, secret access key, and session token)
    as obtained from the COOL User Services account:
 
-   ```console
+   ```ini
    [cool-userservices-account-admin]
    aws_access_key_id = <MY_ACCESS_KEY_ID>
    aws_secret_access_key = <MY_SECRET_ACCESS_KEY>
@@ -57,7 +57,7 @@ To do this bootstrapping, follow these steps:
    in your local configuration that includes the `provisionaccount_role` ARN
    output from the previous step, for example:
 
-   ```console
+   ```ini
    [cool-userservices-provisionaccount]
    role_arn = arn:aws:iam::111111111111:role/ProvisionAccount
    role_session_name = your.session.name
