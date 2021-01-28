@@ -2,38 +2,74 @@
 
 [![GitHub Build Status](https://github.com/cisagov/cool-accounts-userservices/workflows/build/badge.svg)](https://github.com/cisagov/cool-accounts-userservices/actions)
 
-This is a generic skeleton project that can be used to quickly get a
-new [cisagov](https://github.com/cisagov) [Terraform
-module](https://www.terraform.io/docs/modules/index.html) GitHub
-repository started.  This skeleton project contains [licensing
-information](LICENSE), as well as [pre-commit
-hooks](https://pre-commit.com) and
-[GitHub Actions](https://github.com/features/actions) configurations
-appropriate for the major languages that we use.
+This project contains Terraform code to perform the initial configuration
+of a COOL User Services account. This Terraform code creates and configures
+the most basic resources needed to build out services and environments.
 
-See [here](https://www.terraform.io/docs/modules/index.html) for more
-details on Terraform modules and the standard module structure.
+It creates an IAM role that allows sufficient permissions to provision all
+AWS resources in this account. This role has a trust relationship with the
+COOL users account.
 
-## Usage ##
+## Bootstrapping this account ##
 
-```hcl
-module "example" {
-  source = "github.com/cisagov/cool-accounts-userservices"
+Note that the COOL User Services account must be bootstrapped. This is because
+initially there is no IAM role that can be assumed to build out these
+resources. Therefore you must first apply the Terraform code using
+programmatic credentials for AWSAdministratorAccess as obtained for the
+COOL User Services account from the COOL AWS SSO page.
 
-  aws_region            = "us-west-1"
-  aws_availability_zone = "b"
-  subnet_id             = "subnet-0123456789abcdef0"
+After this initial apply your desired IAM role will exist, and it will
+be assumable from your IAM user that exists in the COOL users
+account. Therefore you can apply future changes using your IAM user
+credentials.
 
-  tags = {
-    Key1 = "Value1"
-    Key2 = "Value2"
-  }
-}
-```
+To do this bootstrapping, follow these steps:
 
-## Examples ##
+1. Comment out the `profile = "cool-userservices-provisionaccount"`
+   line for the "default" provider in `providers.tf` and directly
+   below that uncomment the line `profile = "cool-userservices-account-admin"`.
+1. Create a new AWS profile called `cool-userservices-account-admin`
+   in your local configuration using the "AWSAdministratorAccess"
+   credentials (access key ID, secret access key, and session token)
+   as obtained from the COOL User Services account:
 
-* [Deploying into the default VPC](https://github.com/cisagov/cool-accounts-userservices/tree/develop/examples/default_vpc)
+   ```ini
+   [cool-userservices-account-admin]
+   aws_access_key_id = <MY_ACCESS_KEY_ID>
+   aws_secret_access_key = <MY_SECRET_ACCESS_KEY>
+   aws_session_token = <MY_SESSION_TOKEN>
+   ```
+
+1. Create a Terraform workspace (if you haven't already done so) by running
+   `terraform workspace new <workspace_name>`
+1. Create a `<workspace_name>.tfvars` file with all of the required
+   variables (see [Inputs](#Inputs) below for details):
+
+   ```console
+   users_account_id = "222222222222"
+   ```
+
+1. Run the command `terraform init`.
+1. Run the command `terraform apply
+   -var-file=<workspace_name>.tfvars`.
+1. Revert the changes you made to `providers.tf` in step 1.
+1. Create a new AWS profile called `cool-userservices-provisionaccount`
+   in your local configuration that includes the `provisionaccount_role` ARN
+   output from the previous step, for example:
+
+   ```ini
+   [cool-userservices-provisionaccount]
+   role_arn = arn:aws:iam::111111111111:role/ProvisionAccount
+   role_session_name = your.session.name
+   source_profile = cool-user-base-profile
+   ```
+
+1. Run the command `terraform apply
+    -var-file=<workspace_name>.tfvars`.
+
+At this point the account has been bootstrapped, and you can apply
+future changes by simply running `terraform apply
+-var-file=<workspace_name>.tfvars`.
 
 ## Requirements ##
 
@@ -52,34 +88,22 @@ module "example" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| ami_owner_account_id | The ID of the AWS account that owns the Example AMI, or "self" if the AMI is owned by the same account as the provisioner. | `string` | `self` | no |
-| aws_availability_zone | The AWS availability zone to deploy into (e.g. a, b, c, etc.) | `string` | `a` | no |
-| aws_region | The AWS region to deploy into (e.g. us-east-1) | `string` | `us-east-1` | no |
-| subnet_id | The ID of the AWS subnet to deploy into (e.g. subnet-0123456789abcdef0) | `string` | n/a | yes |
-| tags | Tags to apply to all AWS resources created | `map(string)` | `{}` | no |
+| aws_region | The AWS region where the non-global resources for the User Services account are to be provisioned (e.g. "us-east-1"). | `string` | `us-east-1` | no |
+| provisionaccount_role_description | The description to associate with the IAM role that allows sufficient permissions to provision all AWS resources in the User Services account. | `string` | `Allows sufficient permissions to provision all AWS resources in the User Services account.` | no |
+| provisionaccount_role_name | The name to assign the IAM role that allows sufficient permissions to provision all AWS resources in the User Services account. | `string` | `ProvisionAccount` | no |
+| tags | Tags to apply to all AWS resources provisioned. | `map(string)` | `{}` | no |
+| users_account_id | The ID of the users account.  This account will be allowed to assume the role that allows sufficient permissions to provision all AWS resources in the User Services account. | `string` | n/a | yes |
 
 ## Outputs ##
 
 | Name | Description |
 |------|-------------|
-| arn | The EC2 instance ARN |
-| availability_zone | The AZ where the EC2 instance is deployed |
-| id | The EC2 instance ID |
-| private_ip | The private IP of the EC2 instance |
-| subnet_id | The ID of the subnet where the EC2 instance is deployed |
+| provisionaccount_role | The IAM role that allows sufficient permissions to provision all AWS resources in the User Services account. |
 
 ## Notes ##
 
 Running `pre-commit` requires running `terraform init` in every directory that
-contains Terraform code. In this repository, these are the main directory and
-every directory under `examples/`.
-
-## New Repositories from a Skeleton ##
-
-Please see our [Project Setup guide](https://github.com/cisagov/development-guide/tree/develop/project_setup)
-for step-by-step instructions on how to start a new repository from
-a skeleton. This will save you time and effort when configuring a
-new repository!
+contains Terraform code. In this repository, this is just the main directory.
 
 ## Contributing ##
 
