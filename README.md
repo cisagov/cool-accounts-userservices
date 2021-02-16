@@ -101,6 +101,7 @@ future changes by simply running `terraform apply
 | Name | Description |
 |------|-------------|
 | provisionaccount_role | The IAM role that allows sufficient permissions to provision all AWS resources in the User Services account. |
+| provisiondomainmanager_role | The IAM role that allows sufficient permissions to provision all AWS resources for Domain Manager in the User Services account. |
 
 ## Notes ##
 
