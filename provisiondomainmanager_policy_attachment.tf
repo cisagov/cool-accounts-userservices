@@ -9,8 +9,8 @@ resource "aws_iam_role_policy_attachment" "provisiondomainmanager_policy_attachm
   role       = aws_iam_role.provisiondomainmanager_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "provisiondomainmanager_policy_attachment_ecs_elb_events" {
-  policy_arn = aws_iam_policy.provisiondomainmanager_policy_ecs_elb_events.arn
+resource "aws_iam_role_policy_attachment" "provisiondomainmanager_policy_attachment_ecr_ecs_elb_events" {
+  policy_arn = aws_iam_policy.provisiondomainmanager_policy_ecr_ecs_elb_events.arn
   role       = aws_iam_role.provisiondomainmanager_role.name
 }
 

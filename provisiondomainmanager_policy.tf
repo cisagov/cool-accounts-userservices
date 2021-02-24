@@ -97,7 +97,46 @@ resource "aws_iam_policy" "provisiondomainmanager_policy_acm_cognito_ec2" {
   policy      = data.aws_iam_policy_document.provisiondomainmanager_policy_acm_cognito_ec2_doc.json
 }
 
-data "aws_iam_policy_document" "provisiondomainmanager_policy_ecs_elb_events_doc" {
+data "aws_iam_policy_document" "provisiondomainmanager_policy_ecr_ecs_elb_events_doc" {
+  statement {
+    actions = [
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:BatchDeleteImage",
+      "ecr:BatchGetImage",
+      "ecr:CompleteLayerUpload",
+      "ecr:CreateRepository",
+      "ecr:DeleteLifecyclePolicy",
+      "ecr:DeleteRepository",
+      "ecr:DeleteRepositoryPolicy",
+      "ecr:DescribeImages",
+      "ecr:GetLifecyclePolicy",
+      "ecr:GetRepositoryPolicy",
+      "ecr:InitiateLayerUpload",
+      "ecr:ListImages",
+      "ecr:PutImage",
+      "ecr:PutLifecyclePolicy",
+      "ecr:SetRepositoryPolicy",
+      "ecr:UploadLayerPart"
+    ]
+
+    resources = [
+      "arn:aws:ecr::${local.userservices_account_id}:repository/domain-manager-*"
+    ]
+  }
+
+  statement {
+    actions = [
+      "ecr:DescribeRegistry",
+      "ecr:DescribeRepositories",
+      "ecr:GetAuthorizationToken",
+      "ecr:ListTagsForResource",
+      "ecr:TagResource",
+      "ecr:UntagResource"
+    ]
+
+    resources = ["*"]
+  }
+
   statement {
     actions = [
       "ecs:CreateService",
@@ -202,10 +241,10 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_ecs_elb_events_doc
   }
 }
 
-resource "aws_iam_policy" "provisiondomainmanager_policy_ecs_elb_events" {
-  description = "${var.provisiondomainmanager_role_description} (ECS, ELB, Events)"
-  name        = "${var.provisiondomainmanager_role_name}-ecs-elb-events"
-  policy      = data.aws_iam_policy_document.provisiondomainmanager_policy_ecs_elb_events_doc.json
+resource "aws_iam_policy" "provisiondomainmanager_policy_ecr_ecs_elb_events" {
+  description = "${var.provisiondomainmanager_role_description} (ECR, ECS, ELB, Events)"
+  name        = "${var.provisiondomainmanager_role_name}-ecr-ecs-elb-events"
+  policy      = data.aws_iam_policy_document.provisiondomainmanager_policy_ecr_ecs_elb_events_doc.json
 }
 
 data "aws_iam_policy_document" "provisiondomainmanager_policy_lambda_logs_rds_doc" {
