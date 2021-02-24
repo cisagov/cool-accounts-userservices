@@ -51,7 +51,7 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_acm_cognito_ec2_do
       "ec2:RevokeSecurityGroupEgress",
       "ec2:RevokeSecurityGroupIngress",
       "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
-      "ec2:UpdateSecurityGroupRuleDescriptionsIngress"
+      "ec2:UpdateSecurityGroupRuleDescriptionsIngress",
     ]
 
     resources = ["*"]
@@ -84,7 +84,7 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_acm_cognito_ec2_do
       "ec2:DescribeSecurityGroups",
       "ec2:DescribeSubnets",
       "ec2:DescribeTags",
-      "ec2:DescribeVpcs"
+      "ec2:DescribeVpcs",
     ]
 
     resources = ["*"]
@@ -116,11 +116,11 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_ecr_ecs_elb_events
       "ecr:PutImage",
       "ecr:PutLifecyclePolicy",
       "ecr:SetRepositoryPolicy",
-      "ecr:UploadLayerPart"
+      "ecr:UploadLayerPart",
     ]
 
     resources = [
-      "arn:aws:ecr::${local.userservices_account_id}:repository/domain-manager-*"
+      "arn:aws:ecr::${local.userservices_account_id}:repository/domain-manager-*",
     ]
   }
 
@@ -131,7 +131,7 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_ecr_ecs_elb_events
       "ecr:GetAuthorizationToken",
       "ecr:ListTagsForResource",
       "ecr:TagResource",
-      "ecr:UntagResource"
+      "ecr:UntagResource",
     ]
 
     resources = ["*"]
@@ -157,6 +157,18 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_ecr_ecs_elb_events
       "ecs:UpdateContainerInstancesState",
       "ecs:UpdateService",
       "ecs:UpdateServicePrimaryTaskSet",
+    ]
+
+    resources = [
+      "arn:aws:ecs::${local.userservices_account_id}:cluster/domain-manager-*",
+      "arn:aws:ecs::${local.userservices_account_id}:service/domain-manager-*",
+      "arn:aws:ecs::${local.userservices_account_id}:task/domain-manager-*",
+      "arn:aws:ecs::${local.userservices_account_id}:task-definition/domain-manager-*",
+    ]
+  }
+
+  statement {
+    actions = [
       "elasticloadbalancing:AddListenerCertificates",
       "elasticloadbalancing:AddTags",
       "elasticloadbalancing:AddTags",
@@ -183,6 +195,18 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_ecr_ecs_elb_events
       "elasticloadbalancing:SetSecurityGroups",
       "elasticloadbalancing:SetSubnets",
       "elasticloadbalancing:SetWebAcl",
+    ]
+
+    resources = [
+      "arn:aws:elasticloadbalancing::${local.userservices_account_id}:listener/*/domain-manager-*",
+      "arn:aws:elasticloadbalancing::${local.userservices_account_id}:listener-rule/*/domain-manager-*",
+      "arn:aws:elasticloadbalancing::${local.userservices_account_id}:loadbalancer/*/domain-manager-*",
+      "arn:aws:elasticloadbalancing::${local.userservices_account_id}:targetgroup/domain-manager-*",
+    ]
+  }
+
+  statement {
+    actions = [
       "events:DeleteRule",
       "events:DescribeRule",
       "events:DisableRule",
@@ -198,18 +222,10 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_ecr_ecs_elb_events
       "events:RemovePermission",
       "events:RemoveTargets",
       "events:TagResource",
-      "events:UntagResource"
+      "events:UntagResource",
     ]
 
     resources = [
-      "arn:aws:ecs::${local.userservices_account_id}:cluster/domain-manager-*",
-      "arn:aws:ecs::${local.userservices_account_id}:service/domain-manager-*",
-      "arn:aws:ecs::${local.userservices_account_id}:task/domain-manager-*",
-      "arn:aws:ecs::${local.userservices_account_id}:task-definition/domain-manager-*",
-      "arn:aws:elasticloadbalancing::${local.userservices_account_id}:listener/*/domain-manager-*",
-      "arn:aws:elasticloadbalancing::${local.userservices_account_id}:listener-rule/*/domain-manager-*",
-      "arn:aws:elasticloadbalancing::${local.userservices_account_id}:loadbalancer/*/domain-manager-*",
-      "arn:aws:elasticloadbalancing::${local.userservices_account_id}:targetgroup/domain-manager-*",
       "arn:aws:events::${local.userservices_account_id}:rule/domain-manager-*",
     ]
   }
@@ -234,7 +250,7 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_ecr_ecs_elb_events
       "elasticloadbalancing:DescribeTags",
       "elasticloadbalancing:DescribeTargetGroupAttributes",
       "elasticloadbalancing:DescribeTargetGroups",
-      "elasticloadbalancing:DescribeTargetHealth"
+      "elasticloadbalancing:DescribeTargetHealth",
     ]
 
     resources = ["*"]
@@ -291,6 +307,16 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_lambda_logs_rds_do
       "lambda:UpdateFunctionCodeSigningConfig",
       "lambda:UpdateFunctionConfiguration",
       "lambda:UpdateFunctionEventInvokeConfig",
+    ]
+
+    resources = [
+      "arn:aws:lambda::${local.userservices_account_id}:layer:domain-manager-*",
+      "arn:aws:lambda::${local.userservices_account_id}:function:domain-manager-*",
+    ]
+  }
+
+  statement {
+    actions = [
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
       "logs:DeleteLogGroup",
@@ -312,6 +338,15 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_lambda_logs_rds_do
       "logs:PutRetentionPolicy",
       "logs:TagLogGroup",
       "logs:UntagLogGroup",
+    ]
+
+    resources = [
+      "arn:aws:logs::${local.userservices_account_id}:log-group:domain-manager-*:*",
+    ]
+  }
+
+  statement {
+    actions = [
       "rds:AddTagsToResource",
       "rds:AuthorizeDBSecurityGroupIngress",
       "rds:CopyDBClusterSnapshot",
@@ -388,13 +423,10 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_lambda_logs_rds_do
       "rds:StartDBCluster",
       "rds:StartDBInstance",
       "rds:StopDBCluster",
-      "rds:StopDBInstance"
+      "rds:StopDBInstance",
     ]
 
     resources = [
-      "arn:aws:lambda::${local.userservices_account_id}:layer:domain-manager-*",
-      "arn:aws:lambda::${local.userservices_account_id}:function:domain-manager-*",
-      "arn:aws:logs::${local.userservices_account_id}:log-group:domain-manager-*:*",
       "arn:aws:rds::${local.userservices_account_id}:cluster:domain-manager-*",
       "arn:aws:rds::${local.userservices_account_id}:cluster-pg:domain-manager-*",
       "arn:aws:rds::${local.userservices_account_id}:cluster-snapshot:domain-manager-*",
@@ -413,7 +445,7 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_lambda_logs_rds_do
       "lambda:ListFunctions",
       "lambda:ListLayers",
       "lambda:UpdateEventSourceMapping",
-      "logs:DescribeLogGroups"
+      "logs:DescribeLogGroups",
     ]
 
     resources = ["*"]
@@ -474,6 +506,15 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_s3_sqs_ssm_doc" {
       "s3:PutReplicationConfiguration",
       "s3:ReplicateObject",
       "s3:RestoreObject",
+    ]
+
+    resources = [
+      "arn:aws:s3:::domain-manager-*",
+    ]
+  }
+
+  statement {
+    actions = [
       "sqs:AddPermission",
       "sqs:CreateQueue",
       "sqs:DeleteMessage",
@@ -489,6 +530,15 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_s3_sqs_ssm_doc" {
       "sqs:SetQueueAttributes",
       "sqs:TagQueue",
       "sqs:UntagQueue",
+    ]
+
+    resources = [
+      "arn:aws:sqs::${local.userservices_account_id}:domain-manager-*",
+    ]
+  }
+
+  statement {
+    actions = [
       "ssm:AddTagsToResource",
       "ssm:DeleteParameter",
       "ssm:DeleteParameters",
@@ -500,12 +550,10 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_s3_sqs_ssm_doc" {
       "ssm:LabelParameterVersion",
       "ssm:ListTagsForResource",
       "ssm:PutParameter",
-      "ssm:RemoveTagsFromResource"
+      "ssm:RemoveTagsFromResource",
     ]
 
     resources = [
-      "arn:aws:s3:::domain-manager-*",
-      "arn:aws:sqs::${local.userservices_account_id}:domain-manager-*",
       "arn:aws:ssm::${local.userservices_account_id}:parameter/domain-manager/*",
     ]
   }
