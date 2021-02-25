@@ -91,6 +91,8 @@ future changes by simply running `terraform apply
 | aws_region | The AWS region where the non-global resources for the User Services account are to be provisioned (e.g. "us-east-1"). | `string` | `us-east-1` | no |
 | provisionaccount_role_description | The description to associate with the IAM role that allows sufficient permissions to provision all AWS resources in the User Services account. | `string` | `Allows sufficient permissions to provision all AWS resources in the User Services account.` | no |
 | provisionaccount_role_name | The name to assign the IAM role that allows sufficient permissions to provision all AWS resources in the User Services account. | `string` | `ProvisionAccount` | no |
+| provisiondomainmanager_role_description | The description to associate with the IAM policy and role that allows sufficient permissions to provision all AWS resources needed for Domain Manager in the User Services account. | `string` | `Allows sufficient permissions to provision all AWS resources needed for Domain Manager in the User Services account.` | no |
+| provisiondomainmanager_role_name | The name to assign the IAM policy and role that allows sufficient permissions to provision all AWS resources needed for Domain Manager in the User Services account. | `string` | `ProvisionDomainManager` | no |
 | tags | Tags to apply to all AWS resources provisioned. | `map(string)` | `{}` | no |
 | users_account_id | The ID of the users account.  This account will be allowed to assume the role that allows sufficient permissions to provision all AWS resources in the User Services account. | `string` | n/a | yes |
 
@@ -99,6 +101,7 @@ future changes by simply running `terraform apply
 | Name | Description |
 |------|-------------|
 | provisionaccount_role | The IAM role that allows sufficient permissions to provision all AWS resources in the User Services account. |
+| provisiondomainmanager_role | The IAM role that allows sufficient permissions to provision all AWS resources for Domain Manager in the User Services account. |
 
 ## Notes ##
 
