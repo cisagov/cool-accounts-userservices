@@ -89,6 +89,12 @@ future changes by simply running `terraform apply
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | aws_region | The AWS region where the non-global resources for the User Services account are to be provisioned (e.g. "us-east-1"). | `string` | `us-east-1` | no |
+| executedomainmanagerecs_role_description | The description to associate with the IAM policy and role that allows sufficient AWS permissions to execute Domain Manager ECS in the User Services account. | `string` | `Allows sufficient permissions needed for Domain Manager ECS execution in the User Services account.` | no |
+| executedomainmanagerecs_role_name | The name to assign the IAM policy and role that allows sufficient AWS permissions to execute Domain Manager ECS in the User Services account. | `string` | `ExecuteDomainManagerECS` | no |
+| executedomainmanagerecstask_role_description | The description to associate with the IAM policy and role that allows sufficient AWS permissions to execute Domain Manager ECS tasks in the User Services account. | `string` | `Allows sufficient permissions needed for Domain Manager ECS task execution in the User Services account.` | no |
+| executedomainmanagerecstask_role_name | The name to assign the IAM policy and role that allows sufficient AWS permissions to execute Domain Manager ECS tasks in the User Services account. | `string` | `ExecuteDomainManagerECSTask` | no |
+| executedomainmanagerlambda_role_description | The description to associate with the IAM policy and role that allows sufficient AWS permissions to execute Domain Manager Lambdas in the User Services account. | `string` | `Allows sufficient permissions needed for Domain Manager Lambda execution in the User Services account.` | no |
+| executedomainmanagerlambda_role_name | The name to assign the IAM policy and role that allows sufficient AWS permissions to execute Domain Manager Lambdas in the User Services account. | `string` | `ExecuteDomainManagerLambda` | no |
 | provisionaccount_role_description | The description to associate with the IAM role that allows sufficient permissions to provision all AWS resources in the User Services account. | `string` | `Allows sufficient permissions to provision all AWS resources in the User Services account.` | no |
 | provisionaccount_role_name | The name to assign the IAM role that allows sufficient permissions to provision all AWS resources in the User Services account. | `string` | `ProvisionAccount` | no |
 | provisiondomainmanager_role_description | The description to associate with the IAM policy and role that allows sufficient permissions to provision all AWS resources needed for Domain Manager in the User Services account. | `string` | `Allows sufficient permissions to provision all AWS resources needed for Domain Manager in the User Services account.` | no |
@@ -100,6 +106,9 @@ future changes by simply running `terraform apply
 
 | Name | Description |
 |------|-------------|
+| executedomainmanagerecs_role | The IAM role that allows sufficient permissions to execute Domain Manager ECS in the User Services account. |
+| executedomainmanagerecstask_role | The IAM role that allows sufficient permissions to execute Domain Manager ECS tasks in the User Services account. |
+| executedomainmanagerlambda_role | The IAM role that allows sufficient permissions to execute Domain Manager Lambdas in the User Services account. |
 | provisionaccount_role | The IAM role that allows sufficient permissions to provision all AWS resources in the User Services account. |
 | provisiondomainmanager_role | The IAM role that allows sufficient permissions to provision all AWS resources for Domain Manager in the User Services account. |
 
