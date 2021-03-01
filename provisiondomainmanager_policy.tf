@@ -533,7 +533,7 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_s3_sqs_ssm_doc" {
     ]
 
     resources = [
-      "arn:aws:sqs::${local.userservices_account_id}:domain-manager-*",
+      "arn:aws:sqs:*:${local.userservices_account_id}:domain-manager-*",
     ]
   }
 

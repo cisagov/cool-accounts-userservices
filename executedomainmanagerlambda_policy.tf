@@ -41,7 +41,7 @@ data "aws_iam_policy_document" "executedomainmanagerlambda" {
     ]
 
     resources = [
-      "arn:aws:sqs::${local.userservices_account_id}:domain-manager-*",
+      "arn:aws:sqs:*:${local.userservices_account_id}:domain-manager-*",
     ]
   }
 }
