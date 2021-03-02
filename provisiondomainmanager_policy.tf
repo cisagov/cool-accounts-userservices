@@ -120,7 +120,7 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_ecr_ecs_elb_events
     ]
 
     resources = [
-      "arn:aws:ecr::${local.userservices_account_id}:repository/domain-manager-*",
+      "arn:aws:ecr:*:${local.userservices_account_id}:repository/domain-manager-*",
     ]
   }
 
@@ -160,10 +160,10 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_ecr_ecs_elb_events
     ]
 
     resources = [
-      "arn:aws:ecs::${local.userservices_account_id}:cluster/domain-manager-*",
-      "arn:aws:ecs::${local.userservices_account_id}:service/domain-manager-*",
-      "arn:aws:ecs::${local.userservices_account_id}:task/domain-manager-*",
-      "arn:aws:ecs::${local.userservices_account_id}:task-definition/domain-manager-*",
+      "arn:aws:ecs:*:${local.userservices_account_id}:cluster/domain-manager-*",
+      "arn:aws:ecs:*:${local.userservices_account_id}:service/domain-manager-*",
+      "arn:aws:ecs:*:${local.userservices_account_id}:task/domain-manager-*",
+      "arn:aws:ecs:*:${local.userservices_account_id}:task-definition/domain-manager-*",
     ]
   }
 
@@ -198,10 +198,10 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_ecr_ecs_elb_events
     ]
 
     resources = [
-      "arn:aws:elasticloadbalancing::${local.userservices_account_id}:listener/*/domain-manager-*",
-      "arn:aws:elasticloadbalancing::${local.userservices_account_id}:listener-rule/*/domain-manager-*",
-      "arn:aws:elasticloadbalancing::${local.userservices_account_id}:loadbalancer/*/domain-manager-*",
-      "arn:aws:elasticloadbalancing::${local.userservices_account_id}:targetgroup/domain-manager-*",
+      "arn:aws:elasticloadbalancing:*:${local.userservices_account_id}:listener/*/domain-manager-*",
+      "arn:aws:elasticloadbalancing:*:${local.userservices_account_id}:listener-rule/*/domain-manager-*",
+      "arn:aws:elasticloadbalancing:*:${local.userservices_account_id}:loadbalancer/*/domain-manager-*",
+      "arn:aws:elasticloadbalancing:*:${local.userservices_account_id}:targetgroup/domain-manager-*",
     ]
   }
 
@@ -310,8 +310,8 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_lambda_logs_rds_do
     ]
 
     resources = [
-      "arn:aws:lambda::${local.userservices_account_id}:layer:domain-manager-*",
-      "arn:aws:lambda::${local.userservices_account_id}:function:domain-manager-*",
+      "arn:aws:lambda:*:${local.userservices_account_id}:layer:domain-manager-*",
+      "arn:aws:lambda:*:${local.userservices_account_id}:function:domain-manager-*",
     ]
   }
 
@@ -341,7 +341,7 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_lambda_logs_rds_do
     ]
 
     resources = [
-      "arn:aws:logs::${local.userservices_account_id}:log-group:domain-manager-*:*",
+      "arn:aws:logs:*:${local.userservices_account_id}:log-group:domain-manager-*:*",
     ]
   }
 
@@ -427,12 +427,12 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_lambda_logs_rds_do
     ]
 
     resources = [
-      "arn:aws:rds::${local.userservices_account_id}:cluster:domain-manager-*",
-      "arn:aws:rds::${local.userservices_account_id}:cluster-pg:domain-manager-*",
-      "arn:aws:rds::${local.userservices_account_id}:cluster-snapshot:domain-manager-*",
-      "arn:aws:rds::${local.userservices_account_id}:db:domain-manager-*",
-      "arn:aws:rds::${local.userservices_account_id}:secgrp:domain-manager-*",
-      "arn:aws:rds::${local.userservices_account_id}:subgrp:domain-manager-*",
+      "arn:aws:rds:*:${local.userservices_account_id}:cluster:domain-manager-*",
+      "arn:aws:rds:*:${local.userservices_account_id}:cluster-pg:domain-manager-*",
+      "arn:aws:rds:*:${local.userservices_account_id}:cluster-snapshot:domain-manager-*",
+      "arn:aws:rds:*:${local.userservices_account_id}:db:domain-manager-*",
+      "arn:aws:rds:*:${local.userservices_account_id}:secgrp:domain-manager-*",
+      "arn:aws:rds:*:${local.userservices_account_id}:subgrp:domain-manager-*",
     ]
   }
 
@@ -554,7 +554,7 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_s3_sqs_ssm_doc" {
     ]
 
     resources = [
-      "arn:aws:ssm::${local.userservices_account_id}:parameter/domain-manager/*",
+      "arn:aws:ssm:*:${local.userservices_account_id}:parameter/domain-manager/*",
     ]
   }
 

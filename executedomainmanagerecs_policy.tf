@@ -10,7 +10,7 @@ data "aws_iam_policy_document" "executedomainmanagerecs" {
     ]
 
     resources = [
-      "arn:aws:ssm::${local.userservices_account_id}:parameter/domain-manager/*",
+      "arn:aws:ssm:*:${local.userservices_account_id}:parameter/domain-manager/*",
     ]
   }
 }
