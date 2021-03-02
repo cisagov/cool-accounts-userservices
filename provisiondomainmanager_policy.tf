@@ -75,16 +75,22 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_acm_cognito_ec2_do
       "cognito-idp:DescribeUserPoolDomain",
       "cognito-idp:ListUserPools",
       "cognito-idp:TagResource",
+      "ec2:AssignPrivateIpAddresses",
       "ec2:CreateNetworkInterface",
       "ec2:CreateSecurityGroup",
       "ec2:CreateTags",
       "ec2:DeleteNetworkInterface",
       "ec2:DescribeAccountAttributes",
+      "ec2:DescribeAvailabilityZones",
+      "ec2:DescribeInternetGateways",
       "ec2:DescribeNetworkInterfaces",
       "ec2:DescribeSecurityGroups",
       "ec2:DescribeSubnets",
       "ec2:DescribeTags",
+      "ec2:DescribeVpcAttribute",
+      "ec2:DescribeVpcEndpoints",
       "ec2:DescribeVpcs",
+      "ec2:UnassignPrivateIpAddresses",
     ]
 
     resources = ["*"]
@@ -263,6 +269,46 @@ resource "aws_iam_policy" "provisiondomainmanager_policy_ecr_ecs_elb_events" {
   policy      = data.aws_iam_policy_document.provisiondomainmanager_policy_ecr_ecs_elb_events_doc.json
 }
 
+data "aws_iam_policy_document" "provisiondomainmanager_policy_iam_doc" {
+  statement {
+    actions = [
+      "iam:CreateServiceLinkedRole",
+    ]
+
+    resources = [
+      "arn:aws:iam::*:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS*",
+      "arn:aws:iam::*:role/aws-service-role/elasticloadbalancing.amazonaws.com/AWSServiceRoleForElasticLoadBalancing",
+      "arn:aws:iam::*:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS",
+    ]
+
+    condition {
+      test     = "StringLike"
+      variable = "iam:AWSServiceName"
+      values = [
+        "ecs.amazonaws.com",
+        "elasticloadbalancing.amazonaws.com",
+        "rds.amazonaws.com",
+      ]
+    }
+  }
+
+  statement {
+    actions = [
+      "iam:PassRole",
+    ]
+
+    resources = [
+      "arn:aws:iam::${local.userservices_account_id}:role/*DomainManager*",
+    ]
+  }
+}
+
+resource "aws_iam_policy" "provisiondomainmanager_policy_iam" {
+  description = "${var.provisiondomainmanager_role_description} (IAM)"
+  name        = "${var.provisiondomainmanager_role_name}-iam"
+  policy      = data.aws_iam_policy_document.provisiondomainmanager_policy_iam_doc.json
+}
+
 data "aws_iam_policy_document" "provisiondomainmanager_policy_lambda_logs_rds_doc" {
   statement {
     actions = [
@@ -313,6 +359,21 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_lambda_logs_rds_do
       "arn:aws:lambda:*:${local.userservices_account_id}:layer:domain-manager-*",
       "arn:aws:lambda:*:${local.userservices_account_id}:function:domain-manager-*",
     ]
+  }
+
+  statement {
+    actions = [
+      "lambda:CreateEventSourceMapping",
+      "lambda:DeleteEventSourceMapping",
+      "lambda:GetEventSourceMapping",
+      "lambda:ListEventSourceMappings",
+      "lambda:ListFunctions",
+      "lambda:ListLayers",
+      "lambda:UpdateEventSourceMapping",
+      "logs:DescribeLogGroups",
+    ]
+
+    resources = ["*"]
   }
 
   statement {
@@ -434,21 +495,6 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_lambda_logs_rds_do
       "arn:aws:rds:*:${local.userservices_account_id}:secgrp:domain-manager-*",
       "arn:aws:rds:*:${local.userservices_account_id}:subgrp:domain-manager-*",
     ]
-  }
-
-  statement {
-    actions = [
-      "lambda:CreateEventSourceMapping",
-      "lambda:DeleteEventSourceMapping",
-      "lambda:GetEventSourceMapping",
-      "lambda:ListEventSourceMappings",
-      "lambda:ListFunctions",
-      "lambda:ListLayers",
-      "lambda:UpdateEventSourceMapping",
-      "logs:DescribeLogGroups",
-    ]
-
-    resources = ["*"]
   }
 }
 

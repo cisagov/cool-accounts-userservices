@@ -14,6 +14,11 @@ resource "aws_iam_role_policy_attachment" "provisiondomainmanager_policy_attachm
   role       = aws_iam_role.provisiondomainmanager_role.name
 }
 
+resource "aws_iam_role_policy_attachment" "provisiondomainmanager_policy_attachment_iam" {
+  policy_arn = aws_iam_policy.provisiondomainmanager_policy_iam.arn
+  role       = aws_iam_role.provisiondomainmanager_role.name
+}
+
 resource "aws_iam_role_policy_attachment" "provisiondomainmanager_policy_attachment_lambda_logs_rds" {
   policy_arn = aws_iam_policy.provisiondomainmanager_policy_lambda_logs_rds.arn
   role       = aws_iam_role.provisiondomainmanager_role.name
