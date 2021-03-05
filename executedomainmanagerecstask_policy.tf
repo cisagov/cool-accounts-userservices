@@ -81,6 +81,8 @@ data "aws_iam_policy_document" "executedomainmanagerecstask" {
       "cognito-idp:AdminListGroupsForUser",
       "cognito-idp:AdminRemoveUserFromGroup",
       "cognito-idp:AdminResetUserPassword",
+      "cognito-idp:ListUsers",
+      "cognito-idp:ListUsersInGroup",
       "cognito-idp:SignUp",
     ]
 
