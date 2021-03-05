@@ -4,8 +4,8 @@
 # account.
 # ------------------------------------------------------------------------------
 
-resource "aws_iam_role_policy_attachment" "provisiondomainmanager_policy_attachment_acm_cognito_ec2" {
-  policy_arn = aws_iam_policy.provisiondomainmanager_policy_acm_cognito_ec2.arn
+resource "aws_iam_role_policy_attachment" "provisiondomainmanager_policy_attachment_acm_cloudwatch_cognito_ec2" {
+  policy_arn = aws_iam_policy.provisiondomainmanager_policy_acm_cloudwatch_cognito_ec2.arn
   role       = aws_iam_role.provisiondomainmanager_role.name
 }
 

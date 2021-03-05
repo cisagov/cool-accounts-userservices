@@ -3,7 +3,7 @@
 # all AWS resources for Domain Manager in the User Services account.
 # ------------------------------------------------------------------------------
 
-data "aws_iam_policy_document" "provisiondomainmanager_policy_acm_cognito_ec2_doc" {
+data "aws_iam_policy_document" "provisiondomainmanager_policy_acm_cloudwatch_cognito_ec2_doc" {
   statement {
     actions = [
       "acm:DeleteCertificate",
@@ -69,6 +69,9 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_acm_cognito_ec2_do
       "acm:DescribeCertificate",
       "acm:ListCertificates",
       "acm:RequestCertificate",
+      "cloudwatch:GetMetricData",
+      "cloudwatch:GetMetricStatistics",
+      "cloudwatch:ListMetrics",
       "cognito-idp:CreateUserPool",
       "cognito-idp:DescribeUserPool",
       "cognito-idp:DescribeUserPoolClient",
@@ -97,10 +100,10 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_acm_cognito_ec2_do
   }
 }
 
-resource "aws_iam_policy" "provisiondomainmanager_policy_acm_cognito_ec2" {
-  description = "${var.provisiondomainmanager_role_description} (ACM, Cognito, EC2)"
-  name        = "${var.provisiondomainmanager_role_name}-acm-cognito-ec2"
-  policy      = data.aws_iam_policy_document.provisiondomainmanager_policy_acm_cognito_ec2_doc.json
+resource "aws_iam_policy" "provisiondomainmanager_policy_acm_cloudwatch_cognito_ec2" {
+  description = "${var.provisiondomainmanager_role_description} (ACM, CloudWatch, Cognito, EC2)"
+  name        = "${var.provisiondomainmanager_role_name}-acm-cloudwatch-cognito-ec2"
+  policy      = data.aws_iam_policy_document.provisiondomainmanager_policy_acm_cloudwatch_cognito_ec2_doc.json
 }
 
 data "aws_iam_policy_document" "provisiondomainmanager_policy_ecr_ecs_elb_events_doc" {
@@ -132,28 +135,10 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_ecr_ecs_elb_events
 
   statement {
     actions = [
-      "ecr:DescribeRegistry",
-      "ecr:DescribeRepositories",
-      "ecr:GetAuthorizationToken",
-      "ecr:ListTagsForResource",
-      "ecr:TagResource",
-      "ecr:UntagResource",
-    ]
-
-    resources = ["*"]
-  }
-
-  statement {
-    actions = [
       "ecs:CreateService",
       "ecs:DeleteCluster",
       "ecs:DeleteService",
       "ecs:DeregisterContainerInstance",
-      "ecs:ListContainerInstances",
-      "ecs:ListServices",
-      "ecs:ListTaskDefinitionFamilies",
-      "ecs:ListTaskDefinitions",
-      "ecs:ListTasks",
       "ecs:RegisterContainerInstance",
       "ecs:RunTask",
       "ecs:StartTask",
@@ -238,6 +223,12 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_ecr_ecs_elb_events
 
   statement {
     actions = [
+      "ecr:DescribeRegistry",
+      "ecr:DescribeRepositories",
+      "ecr:GetAuthorizationToken",
+      "ecr:ListTagsForResource",
+      "ecr:TagResource",
+      "ecr:UntagResource",
       "ecs:CreateCluster",
       "ecs:DeregisterTaskDefinition",
       "ecs:DescribeClusters",
@@ -246,6 +237,11 @@ data "aws_iam_policy_document" "provisiondomainmanager_policy_ecr_ecs_elb_events
       "ecs:DescribeTaskDefinition",
       "ecs:DescribeTasks",
       "ecs:ListClusters",
+      "ecs:ListContainerInstances",
+      "ecs:ListServices",
+      "ecs:ListTaskDefinitionFamilies",
+      "ecs:ListTaskDefinitions",
+      "ecs:ListTasks",
       "ecs:RegisterTaskDefinition",
       "elasticloadbalancing:DescribeListenerCertificates",
       "elasticloadbalancing:DescribeListeners",
