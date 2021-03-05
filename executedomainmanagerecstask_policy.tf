@@ -123,6 +123,7 @@ data "aws_iam_policy_document" "executedomainmanagerecstask" {
       "s3:ListBucket",
       "s3:PutBucketPolicy",
       "s3:PutBucketPublicAccessBlock",
+      "s3:PutBucketTagging",
       "s3:PutBucketWebsite",
       "s3:PutObject"
     ]
