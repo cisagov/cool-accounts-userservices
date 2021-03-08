@@ -38,7 +38,6 @@ data "aws_iam_policy_document" "executedomainmanagerecstask" {
       "cloudfront:DeleteDistribution",
       "cloudfront:GetDistribution",
       "cloudfront:GetDistributionConfig",
-      "cloudfront:TagResource",
       "cloudfront:UntagResource",
       "cloudfront:UpdateDistribution"
     ]
@@ -56,15 +55,12 @@ data "aws_iam_policy_document" "executedomainmanagerecstask" {
     actions = [
       "cloudfront:CreateDistribution",
       "cloudfront:CreateDistributionWithTags",
+      "cloudfront:ListDistributions",
+      "cloudfront:ListTagsForResource",
+      "cloudfront:TagResource",
     ]
 
     resources = ["*"]
-
-    condition {
-      test     = "StringEquals"
-      variable = "aws:RequestTag/app"
-      values   = ["domain-manager"]
-    }
   }
 
   statement {
