@@ -33,18 +33,6 @@ variable "provisionaccount_role_name" {
   default     = "ProvisionAccount"
 }
 
-variable "provisiondomainmanager_role_description" {
-  type        = string
-  description = "The description to associate with the IAM policy and role that allows sufficient permissions to provision all AWS resources needed for Domain Manager in the User Services account."
-  default     = "Allows sufficient permissions to provision all AWS resources needed for Domain Manager in the User Services account."
-}
-
-variable "provisiondomainmanager_role_name" {
-  type        = string
-  description = "The name to assign the IAM policy and role that allows sufficient permissions to provision all AWS resources needed for Domain Manager in the User Services account."
-  default     = "ProvisionDomainManager"
-}
-
 variable "tags" {
   type        = map(string)
   description = "Tags to apply to all AWS resources provisioned."
