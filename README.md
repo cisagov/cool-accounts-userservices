@@ -45,7 +45,7 @@ To do this bootstrapping, follow these steps:
 1. Create a `<workspace_name>.tfvars` file with all of the required
    variables (see [Inputs](#Inputs) below for details):
 
-   ```console
+   ```hcl
    users_account_id = "222222222222"
    ```
 
