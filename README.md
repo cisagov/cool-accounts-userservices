@@ -94,6 +94,7 @@ future changes by simply running `terraform apply
 
 | Name | Source | Version |
 |------|--------|---------|
+| cw\_alarm\_sns | github.com/cisagov/cw-alarm-sns-tf-module | n/a |
 | provisionaccount | github.com/cisagov/provisionaccount-role-tf-module | n/a |
 | run\_shell\_ssm\_document | gazoakley/session-manager-settings/aws | n/a |
 
@@ -129,6 +130,7 @@ future changes by simply running `terraform apply
 
 | Name | Description |
 |------|-------------|
+| cw\_alarm\_sns\_topic | The SNS topic to which a message is sent when a CloudWatch alarm is triggered. |
 | provisionaccount\_role | The IAM role that allows sufficient permissions to provision all AWS resources in the User Services account. |
 
 ## Notes ##
