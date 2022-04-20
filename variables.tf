@@ -24,7 +24,7 @@ variable "provisionaccount_role_name" {
 
 variable "provisionssmsessionmanager_policy_description" {
   type        = string
-  description = "The description to associate with the IAM policy that allows sufficient permissions to provision the SSM Document resource and set up SSM session logging in the Shared Services account."
+  description = "The description to associate with the IAM policy that allows sufficient permissions to provision the SSM Document resource and set up SSM session logging in the User Services account."
   default     = "Allows sufficient permissions to provision the SSM Document resource and set up SSM session logging in the User Services account."
 }
 
