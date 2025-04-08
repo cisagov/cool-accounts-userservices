@@ -23,7 +23,8 @@ be assumable from your IAM user that exists in the COOL users
 account. Therefore you can apply future changes using your IAM user
 credentials.
 
-To do this bootstrapping, follow these steps:
+To do this bootstrapping, follow these steps (for the purposes of these
+instructions, assume the environment is named "dev"):
 
 1. Comment out the `profile = "cool-userservices-provisionaccount"`
    line for the "default" provider in `providers.tf` and directly
@@ -40,23 +41,45 @@ To do this bootstrapping, follow these steps:
    aws_session_token = <MY_SESSION_TOKEN>
    ```
 
+1. Create a backend configuration file named `dev.tfconfig` containing the name
+of the bucket where Terraform state is stored for that environment.  This file
+is required to initialize the Terraform backend in each environment:
+
+    ```hcl
+    bucket = "my-dev-terraform-state-bucket"
+    ```
+
+1. Initialize the Terraform backend for the "dev" environment using your backend
+   configuration file:
+
+    ```console
+    terraform init -backend-config=dev.tfconfig
+    ```
+
+    > [!NOTE]
+    > When performing this step for additional environments (i.e. not your first
+    > environment), use the `-reconfigure` flag:
+    >
+    > ```console
+    > terraform init -backend-config=other-env.tfconfig -reconfigure
+    > ```
+
 1. Create a Terraform workspace (if you haven't already done so) by running
-   `terraform workspace new <workspace_name>`
-1. Create a `<workspace_name>.tfvars` file with any optional variables
-   that you wish to override (see [Inputs](#inputs) below for
-   details):
+   `terraform workspace new dev`.
+1. Create a `dev.tfvars` file with all of the required variables (see
+  [Inputs](#inputs) below for details):
 
-   ```hcl
-   tags = {
-     Team        = "VM Fusion - Development"
-     Application = "COOL - User Services"
-     Workspace   = "production"
-   }
-   ```
+    ```hcl
+    terraform_state_bucket = "my-dev-terraform-state-bucket"
 
-1. Run the command `terraform init`.
-1. Run the command `terraform apply
-   -var-file=<workspace_name>.tfvars`.
+    tags = {
+      Application = "COOL - User Services"
+      Team        = "VM Fusion - Development"
+      Workspace   = "dev"
+    }
+    ```
+
+1. Run the command `terraform apply -var-file=dev.tfvars`.
 1. Revert the changes you made to `providers.tf` in step 1.
 1. Create a new AWS profile called `cool-userservices-provisionaccount`
    in your local configuration that includes the `provisionaccount_role` ARN
@@ -69,12 +92,10 @@ To do this bootstrapping, follow these steps:
    source_profile = cool-user-base-profile
    ```
 
-1. Run the command `terraform apply
-    -var-file=<workspace_name>.tfvars`.
+1. Run the command `terraform apply -var-file=dev.tfvars`.
 
 At this point the account has been bootstrapped, and you can apply
-future changes by simply running `terraform apply
--var-file=<workspace_name>.tfvars`.
+future changes by simply running `terraform apply -var-file=dev.tfvars`.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements ##
