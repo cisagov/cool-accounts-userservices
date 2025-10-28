@@ -6,9 +6,6 @@
 module "wiz" {
   source = "https://wizio-public-fedramp.s3-us-gov-west-1.amazonaws.com/deployment-v3/aws/terraform/2209/wiz-aws-native-terraform-terraform-module.zip"
 
-  providers = {
-    aws = aws
-  }
 
   cloud-cost-scanning       = false
   data-scanning             = true
