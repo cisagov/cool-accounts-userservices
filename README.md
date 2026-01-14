@@ -1,6 +1,8 @@
 # cool-accounts-userservices #
 
 [![GitHub Build Status](https://github.com/cisagov/cool-accounts-userservices/workflows/build/badge.svg)](https://github.com/cisagov/cool-accounts-userservices/actions)
+[![License](https://img.shields.io/github/license/cisagov/cool-accounts-userservices)](https://spdx.org/licenses/)
+[![CodeQL](https://github.com/cisagov/cool-accounts-userservices/workflows/CodeQL/badge.svg)](https://github.com/cisagov/cool-accounts-userservices/actions/workflows/codeql-analysis.yml)
 
 This project contains Terraform code to perform the initial configuration
 of a COOL User Services account. This Terraform code creates and configures
