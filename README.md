@@ -101,33 +101,33 @@ future changes by simply running `terraform apply -var-file=dev.tfvars`.
 ## Requirements ##
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | terraform | ~> 1.1 |
 | aws | ~> 6.7 |
 
 ## Providers ##
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | aws | ~> 6.7 |
 | aws.organizationsreadonly | ~> 6.7 |
 
 ## Modules ##
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | cw\_alarm\_sns | github.com/cisagov/sns-send-to-account-email-tf-module | n/a |
 | disable-inactive-iam-users | github.com/cisagov/disable-inactive-iam-users-tf-module | n/a |
 | provisionaccount | github.com/cisagov/provisionaccount-role-tf-module | n/a |
 | session\_manager | github.com/cisagov/session-manager-tf-module | n/a |
 | user\_group\_mod\_event | github.com/cisagov/user-group-mod-alert-tf-module | n/a |
 | user\_group\_mod\_sns | github.com/cisagov/sns-send-to-account-email-tf-module | n/a |
-| wiz | `https://wizio-public-fedramp.s3-us-gov-west-1.amazonaws.com/deployment-v3/aws/terraform/2209/wiz-aws-native-terraform-terraform-module.zip` | n/a |
+| wiz | tf.app.wiz.io/wiz/native-terraform/aws | ~> 1.0 |
 
 ## Resources ##
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [aws_iam_policy.provisionssmsessionmanager_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.read_lambda_bucket_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_role_policy_attachment.provisionssmsessionmanager_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
@@ -142,7 +142,7 @@ future changes by simply running `terraform apply -var-file=dev.tfvars`.
 ## Inputs ##
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | aws\_region | The AWS region where the non-global resources for the User Services account are to be provisioned (e.g. "us-east-1"). | `string` | `"us-east-1"` | no |
 | lambda\_bucket\_name | The name of the bucket where Lambda deployment packages are to be stored. | `string` | n/a | yes |
 | lambda\_key | The S3 key associated with the Lambda function deployment package to disable inactive IAM users. | `string` | n/a | yes |
@@ -159,7 +159,7 @@ future changes by simply running `terraform apply -var-file=dev.tfvars`.
 ## Outputs ##
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | cw\_alarm\_sns\_topic | The SNS topic to which a message is sent when a CloudWatch alarm is triggered. |
 | provisionaccount\_role | The IAM role that allows sufficient permissions to provision all AWS resources in the User Services account. |
 | ssm\_session\_role | An IAM role that allows creation of SSM SessionManager sessions to any EC2 instance in this account. |
